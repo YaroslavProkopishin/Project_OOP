@@ -12,7 +12,7 @@ namespace Project_OOP_version1
         public Team ProjectTeam { get; private set; }
         public StartupIdea Idea { get; private set; }
 
-      
+
         public string Status { get; private set; }
 
         public Project(Author author, Team team)
@@ -22,7 +22,7 @@ namespace Project_OOP_version1
             Status = "Команда сформована";
         }
 
-    
+
         public void SetIdea(StartupIdea idea)
         {
             Idea = idea;
@@ -59,6 +59,21 @@ namespace Project_OOP_version1
                 Console.WriteLine($"[ВЕРДИКТ] Відмова. Оцінка проекту: {score}. Ризики занадто високі, ідея недоцільна.\n");
                 return false;
             }
+        }
+
+        public BusinessModelCanvas Canvas { get; private set; }
+
+        public void DevelopCanvas(BusinessModelCanvas canvas)
+        {
+            if (Status == "Ідею відхилено" || Idea == null)
+            {
+                Console.WriteLine("[ЗАБОРОНА] Не можна розробляти бізнес-модель для нерентабельної або відсутньої ідеї!");
+                return;
+            }
+
+            Canvas = canvas;
+            Status = "Бізнес-модель побудована";
+            Console.WriteLine($"[ПРОЦЕС] Бізнес-модель Canvas для проекту \"{Idea.Title}\" успішно сформована та інтегрована.");
         }
     }
 }

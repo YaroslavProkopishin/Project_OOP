@@ -19,7 +19,7 @@ namespace Project_OOP_version1
             }
             _members[_memberCount] = member;
             _memberCount++;
-            Console.WriteLine($"[ПРОЦЕС] До команди додано: {member.Name} на позицію [{member.Role}].");
+            Console.WriteLine($"До команди додано: {member.Name} на позицію [{member.Role}].");
         }
 
         public void PrintTeamInfo()

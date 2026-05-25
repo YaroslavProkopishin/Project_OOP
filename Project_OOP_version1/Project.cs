@@ -75,5 +75,23 @@ namespace Project_OOP_version1
             Status = "Бізнес-модель побудована";
             Console.WriteLine($"[ПРОЦЕС] Бізнес-модель Canvas для проекту \"{Idea.Title}\" успішно сформована та інтегрована.");
         }
+
+        public BusinessPlan FinancialPlan { get; private set; }
+
+
+        public void DevelopBusinessPlan(BusinessPlan plan)
+        {
+
+            if (Canvas == null)
+            {
+                Console.WriteLine("[ЗАБОРОНА] Не можна розробляти бізнес-план без готової Canvas моделі!");
+                return;
+            }
+
+            FinancialPlan = plan;
+            Status = "Бізнес-план розроблено";
+            Console.WriteLine($"[ПРОЦЕС] Фінансовий бізнес-план для проекту успішно прораховано та затверджено.");
+        }
+
     }
 }

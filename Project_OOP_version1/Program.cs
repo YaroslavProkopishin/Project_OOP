@@ -8,7 +8,7 @@ namespace Project_OOP_version1
         {
             Console.OutputEncoding = System.Text.Encoding.UTF8;
 
-            Console.WriteLine("=== СТАРТАП-ПЛАТФОРМА: ВЕРСІЯ 3.0 (Моделювання Canvas) ===\n");
+            Console.WriteLine("=== СТАРТАП-ПЛАТФОРМА: ВЕРСІЯ 4.0 (Фінансовий Бізнес-план) ===\n");
 
             Author author = new Author("Ярослав", "yar.owner@specter.com");
             Team team = new Team();
@@ -20,10 +20,11 @@ namespace Project_OOP_version1
                 Console.WriteLine("ДОСТУПНІ ДІЇ:");
                 Console.WriteLine("1. Переглянути склад команди");
                 Console.WriteLine("2. Додати фахівця до команди");
-                Console.WriteLine("3. Ініціювати проект (об'єднати Автора та Команду)");
+                Console.WriteLine("3. Ініціювати проект");
                 Console.WriteLine("4. Створити стартап-ідею та запустити аналіз доцільності");
                 Console.WriteLine("5. Розробити бізнес-модель Canvas");
-                Console.WriteLine("6. Вихід");
+                Console.WriteLine("6. Розрахувати фінансовий бізнес-план");
+                Console.WriteLine("7. Вихід");
                 Console.Write("\nОберіть дію: ");
 
                 string choice = Console.ReadLine();
@@ -31,86 +32,54 @@ namespace Project_OOP_version1
 
                 switch (choice)
                 {
-                    case "1":
-                        team.PrintTeamInfo();
-                        break;
-
+                    case "1": team.PrintTeamInfo(); break;
                     case "2":
-                        Console.Write("Введіть ім'я фахівця: ");
-                        string name = Console.ReadLine();
-                        Console.Write("Введіть роль: ");
-                        string role = Console.ReadLine();
+                        Console.Write("Введіть ім'я фахівця: "); string name = Console.ReadLine();
+                        Console.Write("Введіть роль: "); string role = Console.ReadLine();
                         team.AddMember(new TeamMember(name, role));
                         break;
-
                     case "3":
                         currentProject = new Project(author, team);
-                        Console.WriteLine($"[ПРОЦЕС] Проект успішно ініційовано. Статус: [{currentProject.Status}].\n");
+                        Console.WriteLine($"Проект ініційовано. Статус: [{currentProject.Status}].\n");
                         break;
-
                     case "4":
-                        if (currentProject == null)
-                        {
-                            Console.WriteLine("[ЗАБОРОНА] Спочатку потрібно ініціювати проект (Пункт 3)!\n");
-                            break;
-                        }
-
-                        Console.WriteLine("[ГЕНЕРАЦІЯ] Введіть параметри ідеї:");
-                        Console.Write("Назва стартапу: ");
-                        string title = Console.ReadLine();
-                        Console.Write("Опис ідеї: ");
-                        string desc = Console.ReadLine();
-                        Console.Write("Попит на ринку (1-10): ");
-                        int demand = int.Parse(Console.ReadLine());
-                        Console.Write("Технічна складність (1-10): ");
-                        int complexity = int.Parse(Console.ReadLine());
-                        Console.Write("Фінансова вигода (1-10): ");
-                        int gain = int.Parse(Console.ReadLine());
+                        if (currentProject == null) { Console.WriteLine("[ЗАБОРОНА] Спочатку ініціюйте проект (Пункт 3)!\n"); break; }
+                        Console.Write("Назва стартапу: "); string title = Console.ReadLine();
+                        Console.Write("Опис ідеї: "); string desc = Console.ReadLine();
+                        Console.Write("Попит (1-10): "); int demand = int.Parse(Console.ReadLine());
+                        Console.Write("Складність (1-10): "); int complexity = int.Parse(Console.ReadLine());
+                        Console.Write("Вигода (1-10): "); int gain = int.Parse(Console.ReadLine());
 
                         StartupIdea idea = new StartupIdea(title, desc, demand, complexity, gain);
                         currentProject.SetIdea(idea);
                         currentProject.AnalyzeFeasibility();
                         break;
-
                     case "5":
-                        // ВАЛІДАЦІЯ БІЗНЕС-ПРОЦЕСУ
-                        if (currentProject == null || currentProject.Idea == null)
-                        {
-                            Console.WriteLine("[ЗАБОРОНА] Не можна будувати Canvas! Спочатку завантажте та проаналізуйте ідею (Пункт 4).\n");
-                            break;
-                        }
-                        if (currentProject.Status == "Ідею відхилено")
-                        {
-                            Console.WriteLine("[ЗАБОРОНА] Процес заблоковано: ваша ідея недоцільна за результатами аналізу.\n");
-                            break;
-                        }
+                        if (currentProject == null || currentProject.Idea == null) { Console.WriteLine("[ЗАБОРОНА] Спочатку проаналізуйте ідею (Пункт 4).\n"); break; }
+                        if (currentProject.Status == "Ідею відхилено") { Console.WriteLine("[ЗАБОРОНА] Ідею відхилено, процес заблоковано.\n"); break; }
 
-                        Console.WriteLine("[МОДЕЛЮВАННЯ] Заповнення блоків Canvas:");
-                        Console.Write("Яка головна цінність продукту? (Value Proposition): ");
-                        string vp = Console.ReadLine();
-                        Console.Write("Хто ваша цільова аудиторія? (Target Audience): ");
-                        string ta = Console.ReadLine();
-                        Console.Write("Які канали залучення клієнтів? (Channels): ");
-                        string ch = Console.ReadLine();
-                        Console.Write("Які основні джерела доходів? (Revenue Streams): ");
-                        string rs = Console.ReadLine();
+                        Console.Write("Ціннісна пропозиція: "); string vp = Console.ReadLine();
+                        Console.Write("Цільова аудиторія: "); string ta = Console.ReadLine();
+                        Console.Write("Канали збуту: "); string ch = Console.ReadLine();
+                        Console.Write("Джерела доходів: "); string rs = Console.ReadLine();
 
-                        BusinessModelCanvas canvas = new BusinessModelCanvas(vp, ta, ch, rs);
-                        currentProject.DevelopCanvas(canvas);
-
-
+                        currentProject.DevelopCanvas(new BusinessModelCanvas(vp, ta, ch, rs));
                         currentProject.Canvas.PrintCanvas();
                         break;
-
                     case "6":
-                        running = false;
-                        break;
+                        if (currentProject == null || currentProject.Canvas == null) { Console.WriteLine("[ЗАБОРОНА] Спочатку побудуйте бізнес-модель Canvas (Пункт 5).\n"); break; }
 
-                    default:
-                        Console.WriteLine("Невірний вибір. Спробуйте ще раз.\n");
+                        Console.Write("Бюджет на розробку продукту (EUR): "); double dev = double.Parse(Console.ReadLine());
+                        Console.Write("Бюджет на маркетинг (EUR): "); double market = double.Parse(Console.ReadLine());
+                        Console.Write("Прогнозований чистий дохід на місяць (EUR): "); double revenue = double.Parse(Console.ReadLine());
+
+                        currentProject.DevelopBusinessPlan(new BusinessPlan(dev, market, revenue));
+                        currentProject.FinancialPlan.PrintBusinessPlan();
                         break;
+                    case "7": running = false; break;
+                    default: Console.WriteLine("Невірний вибір.\n"); break;
                 }
-                Console.WriteLine("--------------------------------------------------\n");
+                Console.WriteLine("--------------------------------------------------");
             }
         }
     }

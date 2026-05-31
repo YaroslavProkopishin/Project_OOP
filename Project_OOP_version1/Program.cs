@@ -57,7 +57,7 @@ namespace Project_OOP_version1
                         Console.Write("Складність (1-10): "); int complexity = int.Parse(Console.ReadLine());
                         Console.Write("Вигода (1-10): "); int gain = int.Parse(Console.ReadLine());
 
-                        currentProject.SetIdea(new StartapIdea(title, desc, demand, complexity, gain));
+                        currentProject.SetIdea(new StartupIdea(title, desc, demand, complexity, gain));
                         currentProject.AnalyzeFeasibility();
                         break;
                     case "5":

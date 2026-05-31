@@ -65,5 +65,26 @@ namespace Project_OOP_version1
             Status = "Бізнес-план розроблено";
             Console.WriteLine($"[ПРОЦЕС] Фінансовий бізнес-план успішно затверджено.");
         }
+
+        public bool PitchProject(Investor investor)
+        {
+            if (FinancialPlan == null) return false;
+
+            Console.WriteLine($"\n[ПІТЧИНГ] Презентація проекту перед інвестором: {investor.Name}...");
+
+            if (FinancialPlan.TotalInvestmentNeeded > investor.MaxInvestmentBudget ||
+                FinancialPlan.PaybackPeriodMonths > investor.MaxAllowedPaybackMonths)
+            {
+                Console.WriteLine($"[ВІДМОВА] {investor.Name} відхилив проект через невідповідність критеріям.");
+                return false;
+            }
+
+            Status = "Фінансування отримано";
+            Console.WriteLine($"\n==================================================");
+            Console.WriteLine($"[УСПІХ] Інвестор {investor.Name} СХВАЛИВ проект!");
+            Console.WriteLine($"Виділено фінансування: {FinancialPlan.TotalInvestmentNeeded} EUR.");
+            Console.WriteLine("==================================================\n");
+            return true;
+        }
     }
 }

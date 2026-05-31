@@ -8,7 +8,8 @@ namespace Project_OOP_version1
         {
             Console.OutputEncoding = System.Text.Encoding.UTF8;
 
-            Console.WriteLine("=== СТАРТАП-ПЛАТФОРМА: ВЕРСІЯ 6.0 (Фінальна Інтеграція) ===\n");
+            // Використання локалізації для заголовку
+            Console.WriteLine(Messages.MenuTitle + "\n");
 
             Author author = new Author("Ярослав", "yar.owner@specter.com");
             Team team = new Team();
@@ -23,17 +24,18 @@ namespace Project_OOP_version1
             bool running = true;
             while (running)
             {
+                // Винесення всього списку дій у файл локалізації
                 Console.WriteLine("ДОСТУПНІ ДІЇ:");
-                Console.WriteLine("1. Переглянути склад команди");
-                Console.WriteLine("2. Додати фахівця до команди");
-                Console.WriteLine("3. Ініціювати проект");
-                Console.WriteLine("4. Створити стартап-ідею та запустити аналіз доцільності");
-                Console.WriteLine("5. Розробити бізнес-модель Canvas");
-                Console.WriteLine("6. Розрахувати фінансовий бізнес-план");
-                Console.WriteLine("7. Презентувати проект інвесторам (Пошук фінансування)");
-                Console.WriteLine("8. Повна автоматична симуляція циклу");
-                Console.WriteLine("9. Вихід");
-                Console.Write("\nОберіть дію: ");
+                Console.WriteLine(Messages.MenuAction1);
+                Console.WriteLine(Messages.MenuAction2);
+                Console.WriteLine(Messages.MenuAction3);
+                Console.WriteLine(Messages.MenuAction4);
+                Console.WriteLine(Messages.MenuAction5);
+                Console.WriteLine(Messages.MenuAction6);
+                Console.WriteLine(Messages.MenuAction7);
+                Console.WriteLine(Messages.MenuAction8);
+                Console.WriteLine(Messages.MenuAction9);
+                Console.Write("\n" + Messages.EnterChoice);
 
                 string choice = Console.ReadLine();
                 Console.WriteLine();
@@ -51,7 +53,8 @@ namespace Project_OOP_version1
                         Console.WriteLine($"[ПРОЦЕС] Проект ініційовано. Статус: [{currentProject.Status}].\n");
                         break;
                     case "4":
-                        if (currentProject == null) { Console.WriteLine("[ЗАБОРОНА] Спочатку ініціюйте проект (Пункт 3)!\n"); break; }
+                        // Використання локалізованого рядка заборони
+                        if (currentProject == null) { Console.WriteLine(Messages.AccessDenied + "\n"); break; }
                         Console.Write("Назва стартапу: "); string title = Console.ReadLine();
                         Console.Write("Опис ідеї: "); string desc = Console.ReadLine();
                         Console.Write("Попит (1-10): "); int demand = int.Parse(Console.ReadLine());

@@ -148,7 +148,13 @@
     <value>8. Повна автоматична симуляція циклу</value>
   </data>
   <data name="MenuAction9" xml:space="preserve">
-    <value>9. Вихід</value>
+    <value>9. Переглянути авторів з бази даних</value>
+  </data>
+  <data name="MenuAction10" xml:space="preserve">
+    <value>10. Додати нового автора в базу даних</value>
+  </data>
+  <data name="MenuAction11" xml:space="preserve">
+    <value>11. Видалити автора з бази даних</value>
   </data>
   <data name="MenuTitle" xml:space="preserve">
     <value>=== СТАРТАП-ПЛАТФОРМА: ВЕРСІЯ 6.0 (Фінальна Інтеграція) ===</value>
@@ -158,5 +164,8 @@
   </data>
   <data name="SimulationStart" xml:space="preserve">
     <value>\n==================================================\n ЗАПУСК ПОВНОГО АВТОМАТИЗОВАНОГО ЦИКЛУ СТАРТАПУ \n==================================================\n</value>
+  </data>
+  <data name="MenuAction12" xml:space="preserve">
+    <value>12. Вихід</value>
   </data>
 </root>

@@ -88,6 +88,33 @@ namespace Project_OOP_version1 {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 10. Додати нового автора в базу даних.
+        /// </summary>
+        public static string MenuAction10 {
+            get {
+                return ResourceManager.GetString("MenuAction10", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 11. Видалити автора з бази даних.
+        /// </summary>
+        public static string MenuAction11 {
+            get {
+                return ResourceManager.GetString("MenuAction11", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 12. Вихід.
+        /// </summary>
+        public static string MenuAction12 {
+            get {
+                return ResourceManager.GetString("MenuAction12", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 2. Додати фахівця до команди.
         /// </summary>
         public static string MenuAction2 {
@@ -151,7 +178,7 @@ namespace Project_OOP_version1 {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 9. Вихід.
+        ///   Looks up a localized string similar to 9.Переглянути авторів з бази даних.
         /// </summary>
         public static string MenuAction9 {
             get {

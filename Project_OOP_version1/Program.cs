@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Project_OOP_version1
 {
@@ -8,10 +9,15 @@ namespace Project_OOP_version1
         {
             Console.OutputEncoding = System.Text.Encoding.UTF8;
 
-            // Використання локалізації для заголовку
             Console.WriteLine(Messages.MenuTitle + "\n");
 
-            Author author = new Author("Ярослав", "yar.owner@specter.com");
+            // Ініціалізація бази даних авторів
+            AuthorRepository authorRepo = new AuthorRepository();
+            List<Author> dbAuthors = authorRepo.LoadAuthors();
+
+            // Поточний автор за замовчуванням (перший з бази)
+            Author currentAuthor = dbAuthors.Count > 0 ? dbAuthors[0] : new Author("Ярослав", "yar.owner@specter.com");
+
             Team team = new Team();
             Project currentProject = null;
 
@@ -24,7 +30,6 @@ namespace Project_OOP_version1
             bool running = true;
             while (running)
             {
-                // Винесення всього списку дій у файл локалізації
                 Console.WriteLine("ДОСТУПНІ ДІЇ:");
                 Console.WriteLine(Messages.MenuAction1);
                 Console.WriteLine(Messages.MenuAction2);
@@ -34,7 +39,11 @@ namespace Project_OOP_version1
                 Console.WriteLine(Messages.MenuAction6);
                 Console.WriteLine(Messages.MenuAction7);
                 Console.WriteLine(Messages.MenuAction8);
-                Console.WriteLine(Messages.MenuAction9);
+                Console.WriteLine(Messages.MenuAction9); 
+                Console.WriteLine(Messages.MenuAction10);  
+                Console.WriteLine(Messages.MenuAction11);  
+                Console.WriteLine(Messages.MenuAction12);  
+
                 Console.Write("\n" + Messages.EnterChoice);
 
                 string choice = Console.ReadLine();
@@ -49,11 +58,10 @@ namespace Project_OOP_version1
                         team.AddMember(new TeamMember(name, role));
                         break;
                     case "3":
-                        currentProject = new Project(author, team);
-                        Console.WriteLine($"[ПРОЦЕС] Проект ініційовано. Статус: [{currentProject.Status}].\n");
+                        currentProject = new Project(currentAuthor, team);
+                        Console.WriteLine($"[ПРОЦЕС] Проект ініційовано автором {currentAuthor.Name}. Статус: [{currentProject.Status}].\n");
                         break;
                     case "4":
-                        // Використання локалізованого рядка заборони
                         if (currentProject == null) { Console.WriteLine(Messages.AccessDenied + "\n"); break; }
                         Console.Write("Назва стартапу: "); string title = Console.ReadLine();
                         Console.Write("Опис ідеї: "); string desc = Console.ReadLine();
@@ -102,7 +110,55 @@ namespace Project_OOP_version1
                         simulation.RunFullSimulation();
                         break;
 
-                    case "9": running = false; break;
+                  
+                    case "9":
+                        authorRepo.PrintAllAuthors(dbAuthors);
+                        break;
+
+                  
+                    case "10":
+                        Console.Write("Введіть ім'я нового автора: "); string aName = Console.ReadLine();
+                        Console.Write("Введіть email автора: "); string aEmail = Console.ReadLine();
+
+                        dbAuthors.Add(new Author(aName, aEmail));
+                        authorRepo.SaveAuthors(dbAuthors);
+                        Console.WriteLine($"[БД] Автора {aName} успішно додано та збережено у файл!\n");
+                        break;
+
+                    
+                    case "11":
+                        authorRepo.PrintAllAuthors(dbAuthors);
+                        if (dbAuthors.Count == 0) break;
+
+                        Console.Write("Введіть номер автора для видалення: ");
+                        string input = Console.ReadLine();
+                        int index;
+
+                        if (int.TryParse(input, out index))
+                        {
+                            index--;
+                            if (index >= 0 && index < dbAuthors.Count)
+                            {
+                                string removedName = dbAuthors[index].Name;
+                                dbAuthors.RemoveAt(index);
+                                authorRepo.SaveAuthors(dbAuthors);
+                                Console.WriteLine($"[БД] Автора {removedName} успішно видалено з бази даних.\n");
+
+                                if (dbAuthors.Count > 0) currentAuthor = dbAuthors[0];
+                            }
+                            else
+                            {
+                                Console.WriteLine("[ПОМИЛКА] Невірний номер автора.\n");
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("[ПОМИЛКА] Будь ласка, введіть число.\n");
+                        }
+                        break;
+
+                 
+                    case "12": running = false; break;
                     default: Console.WriteLine("Невірний вибір.\n"); break;
                 }
                 Console.WriteLine("--------------------------------------------------");

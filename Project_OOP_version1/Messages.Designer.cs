@@ -178,7 +178,7 @@ namespace Project_OOP_version1 {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 9.Переглянути авторів з бази даних.
+        ///   Looks up a localized string similar to 9. Переглянути авторів з бази даних.
         /// </summary>
         public static string MenuAction9 {
             get {
@@ -196,7 +196,7 @@ namespace Project_OOP_version1 {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ==================================================\n АВТОМАТИЧНУ СИМУЛЯЦІЮ УСПІШНО ЗАВЕРШЕНО \n==================================================\n.
+        ///   Looks up a localized string similar to АВТОМАТИЧНУ СИМУЛЯЦІЮ УСПІШНО ЗАВЕРШЕНО .
         /// </summary>
         public static string SimulationEnd {
             get {
@@ -205,7 +205,7 @@ namespace Project_OOP_version1 {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to \n==================================================\n ЗАПУСК ПОВНОГО АВТОМАТИЗОВАНОГО ЦИКЛУ СТАРТАПУ \n==================================================\n.
+        ///   Looks up a localized string similar to ЗАПУСК ПОВНОГО АВТОМАТИЗОВАНОГО ЦИКЛУ СТАРТАПУ.
         /// </summary>
         public static string SimulationStart {
             get {

@@ -7,13 +7,13 @@ namespace Project_OOP_version1
         static void Main(string[] args)
         {
             Console.OutputEncoding = System.Text.Encoding.UTF8;
-            Console.WriteLine("=== СТАРТАП-ПЛАТФОРМА: ВЕРСІЯ 5.0 ===\n");
+
+            Console.WriteLine("=== СТАРТАП-ПЛАТФОРМА: ВЕРСІЯ 6.0 (Фінальна Інтеграція) ===\n");
 
             Author author = new Author("Ярослав", "yar.owner@specter.com");
             Team team = new Team();
             Project currentProject = null;
 
-            // Наш масив інвесторів для перевірки
             Investor[] investors = new Investor[2]
             {
                 new Investor("Ангел-Інвестор (Максим)", 5000, 12),
@@ -31,7 +31,8 @@ namespace Project_OOP_version1
                 Console.WriteLine("5. Розробити бізнес-модель Canvas");
                 Console.WriteLine("6. Розрахувати фінансовий бізнес-план");
                 Console.WriteLine("7. Презентувати проект інвесторам (Пошук фінансування)");
-                Console.WriteLine("8. Вихід");
+                Console.WriteLine("8. Повна автоматична симуляція циклу");
+                Console.WriteLine("9. Вихід");
                 Console.Write("\nОберіть дію: ");
 
                 string choice = Console.ReadLine();
@@ -50,19 +51,20 @@ namespace Project_OOP_version1
                         Console.WriteLine($"[ПРОЦЕС] Проект ініційовано. Статус: [{currentProject.Status}].\n");
                         break;
                     case "4":
-                        if (currentProject == null) { Console.WriteLine("[ЗАБОРОНА] Спочатку ініційойте проект!\n"); break; }
+                        if (currentProject == null) { Console.WriteLine("[ЗАБОРОНА] Спочатку ініціюйте проект (Пункт 3)!\n"); break; }
                         Console.Write("Назва стартапу: "); string title = Console.ReadLine();
                         Console.Write("Опис ідеї: "); string desc = Console.ReadLine();
                         Console.Write("Попит (1-10): "); int demand = int.Parse(Console.ReadLine());
                         Console.Write("Складність (1-10): "); int complexity = int.Parse(Console.ReadLine());
                         Console.Write("Вигода (1-10): "); int gain = int.Parse(Console.ReadLine());
 
-                        currentProject.SetIdea(new StartupIdea(title, desc, demand, complexity, gain));
+                        StartupIdea idea = new StartupIdea(title, desc, demand, complexity, gain);
+                        currentProject.SetIdea(idea);
                         currentProject.AnalyzeFeasibility();
                         break;
                     case "5":
-                        if (currentProject == null || currentProject.Idea == null) { Console.WriteLine("[ЗАБОРОНА] Спочатку проаналізуйте ідею.\n"); break; }
-                        if (currentProject.Status == "Ідею відхилено") { Console.WriteLine("[ЗАБОРОНА] Процес заблоковано: ідея недоцільна.\n"); break; }
+                        if (currentProject == null || currentProject.Idea == null) { Console.WriteLine("[ЗАБОРОНА] Спочатку проаналізуйте ідею (Пункт 4).\n"); break; }
+                        if (currentProject.Status == "Ідею відхилено") { Console.WriteLine("[ЗАБОРОНА] Ідею відхилено, процес заблоковано.\n"); break; }
 
                         Console.Write("Ціннісна пропозиція: "); string vp = Console.ReadLine();
                         Console.Write("Цільова аудиторія: "); string ta = Console.ReadLine();
@@ -73,24 +75,31 @@ namespace Project_OOP_version1
                         currentProject.Canvas.PrintCanvas();
                         break;
                     case "6":
-                        if (currentProject == null || currentProject.Canvas == null) { Console.WriteLine("[ЗАБОРОНА] Спочатку побудуйте бізнес-модель Canvas.\n"); break; }
+                        if (currentProject == null || currentProject.Canvas == null) { Console.WriteLine("[ЗАБОРОНА] Спочатку побудуйте бізнес-модель Canvas (Пункт 5).\n"); break; }
 
-                        Console.Write("Бюджет на розробку (EUR): "); double dev = double.Parse(Console.ReadLine());
+                        Console.Write("Бюджет на розробку продукту (EUR): "); double dev = double.Parse(Console.ReadLine());
                         Console.Write("Бюджет на маркетинг (EUR): "); double market = double.Parse(Console.ReadLine());
-                        Console.Write("Чистий дохід на місяць (EUR): "); double revenue = double.Parse(Console.ReadLine());
+                        Console.Write("Прогнозований чистий дохід на місяць (EUR): "); double revenue = double.Parse(Console.ReadLine());
 
                         currentProject.DevelopBusinessPlan(new BusinessPlan(dev, market, revenue));
                         currentProject.FinancialPlan.PrintBusinessPlan();
                         break;
+
                     case "7":
-                        if (currentProject == null || currentProject.FinancialPlan == null) { Console.WriteLine("[ЗАБОРОНА] Спочатку розрахуйте бізнес-план.\n"); break; }
+                        if (currentProject == null || currentProject.FinancialPlan == null) { Console.WriteLine("[ЗАБОРОНА] Спочатку розрахуйте бізнес-план з цифрами (Пункт 6).\n"); break; }
                         Console.WriteLine("[ПОШУК] Запуск презентацій для бази інвесторів...");
                         for (int i = 0; i < investors.Length; i++)
                         {
                             if (currentProject.PitchProject(investors[i])) break;
                         }
                         break;
-                    case "8": running = false; break;
+
+                    case "8":
+                        StartupPlatformManager simulation = new StartupPlatformManager();
+                        simulation.RunFullSimulation();
+                        break;
+
+                    case "9": running = false; break;
                     default: Console.WriteLine("Невірний вибір.\n"); break;
                 }
                 Console.WriteLine("--------------------------------------------------");
